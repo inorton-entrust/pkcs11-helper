@@ -650,6 +650,11 @@ __pkcs11h_certificate_legacy_deserializeCertificateId (
 	}
 	certificate_id->attrCKA_ID_size = id_hex_len/2;
 
+	if (certificate_id->attrCKA_ID_size == 0) {
+		rv = CKR_ATTRIBUTE_VALUE_INVALID;
+		goto cleanup;
+	}
+
 	if (
 		(rv = _pkcs11h_mem_malloc (
 			(void *)&certificate_id->attrCKA_ID,
